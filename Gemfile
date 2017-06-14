@@ -50,5 +50,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
 gem 'omniauth'
+gem 'omniauth-oauth2', '~> 1.3.1'
 gem 'omniauth-line', git: 'https://github.com/holyshared/omniauth-line.git'
-

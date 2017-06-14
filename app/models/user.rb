@@ -8,25 +8,33 @@ class User < ApplicationRecord
 
   has_many :identities
 
+  before_validation do
+    self.password = SecureRandom.hex(8) if password.blank?
+  end
+
   class << self
     def find_or_create_omniauth!(auth)
-      registered_user = User.email(auth.info.email).first
-      return registered_user if registered_user.present?
+      registered_identity = Identity.find_by_oauth_provider(auth)
+      return registered_identity.user if registered_identity.present?
+      register_by_auth_provider!(auth)
+    end
 
-      user = nil
+    def register_by_auth_provider!(auth)
       ApplicationRecord.transaction do
         identity = Identity.first_or_create_with_omniauth!(auth)
         user = User.create!(
           email: auth.info.email,
-          confirmed_at: Time.current,
           identities: [identity]
         )
       end
-      user
     end
 
     def reconfirmable
       false
     end
+  end
+
+  def email_required?
+    email.present?
   end
 end
