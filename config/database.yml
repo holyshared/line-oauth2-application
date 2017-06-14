@@ -24,6 +24,8 @@ default: &default
 development:
   <<: *default
   database: line-oauth2-application_development
+  username: root
+  password: <%= ENV['LINE-OAUTH2-APPLICATION_DATABASE_PASSWORD'] %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -58,6 +60,8 @@ development:
 test:
   <<: *default
   database: line-oauth2-application_test
+  username: root
+  password: <%= ENV['LINE-OAUTH2-APPLICATION_DATABASE_PASSWORD'] %>
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -81,5 +85,5 @@ test:
 production:
   <<: *default
   database: line-oauth2-application_production
-  username: line-oauth2-application
+  username: root
   password: <%= ENV['LINE-OAUTH2-APPLICATION_DATABASE_PASSWORD'] %>
