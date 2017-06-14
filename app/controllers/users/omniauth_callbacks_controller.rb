@@ -7,6 +7,16 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # end
 
   def line
+    @user = User.find_or_create_omniauth!(request.env['omniauth.auth'])
+    sign_in_and_redirect @user, event: :authentication
+    set_flash_message(:notice, :success, kind: 'Line') if is_navigational_format?
+  rescue
+    set_flash_message(:error, 'oops!!', kind: 'Line')
+    redirect_to new_user_session_path
+  end
+
+  def failure
+    redirect_to root_path
   end
 
   # More info at:
