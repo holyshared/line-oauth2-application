@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:holyshared/omniauth-line.git
+  remote: https://github.com/holyshared/omniauth-line.git
   revision: 7b27f8b00a612543914c96539dd88d1f6cdd55f7
   specs:
     omniauth-line (0.0.3)
