@@ -1,3 +1,27 @@
-ok
-
-<%= link_to 'sign_out', destroy_user_session_path, method: :delete %>
+<article>
+  <header>
+    <h1>Home</h1>
+  </header>
+  <section>
+    <header>
+      <h2>Settings</h2>
+    </header>
+    <section>
+      <header>
+        <h3>Account</h3>
+        <p>name: <%= @user.email %></p>
+      </header>
+    </section>
+    <section>
+      <header>
+        <h3>Cooperation with social network</h3>
+      </header>
+      <ul>
+        <%- @user.class.omniauth_providers.each do |provider| %>
+          <li><%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(:user, provider) %></li>
+        <% end -%>
+      </ul>
+    </section>
+    <p><%= link_to 'sign_out', destroy_user_session_path, method: :delete %></p>
+  </section>
+</article>

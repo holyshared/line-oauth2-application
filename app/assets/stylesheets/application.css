@@ -13,3 +13,40 @@
  *= require_tree .
  *= require_self
  */
+
+header, article section {
+  display: block;
+}
+
+article {
+  width: 980px;
+  margin:  0 auto;
+}
+
+section {
+  margin-bottom: 25px;
+}
+
+p {
+  padding: 0;
+  margin: 0 0 10px 0;
+}
+
+h1 {
+  font-size: x-large;
+}
+
+h2 {
+  font-size: large;
+}
+
+h3 {
+  font-size: medium;
+  margin: 0 0 10px 0;
+  padding: 0;
+}
+
+ul {
+  padding: 0;
+  margin: 0 0 10px 0;
+}
