@@ -7,12 +7,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # end
 
   def line
-    if current_user.blank?
+    @user = current_user
+    if @user.blank?
       Rails.logger.info 'Not signed in ^^^^^^^^^^^^^^^^^^^^^^^'
     else
       Rails.logger.info 'Signed in ^^^^^^^^^^^^^^^^^^^^^^^^^^^'
     end
-    @user = User.find_or_create_omniauth!(request.env['omniauth.auth'])
+    @user.register_by_auth_provider!(request.env['omniauth.auth'])
     sign_in_and_redirect @user, event: :authentication
     set_flash_message(:notice, :success, kind: 'Line') if is_navigational_format?
   rescue => e

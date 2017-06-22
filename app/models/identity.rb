@@ -6,8 +6,8 @@ class Identity < ApplicationRecord
       find_by(uid: auth['uid'], provider: auth['provider'])
     end
 
-    def first_or_create_with_omniauth!(auth)
-      where(uid: auth['uid'], provider: auth['provider']).first_or_initialize
+    def register!(user, auth)
+      create!(user: user, uid: auth['uid'], provider: auth['provider'])
     end
   end
 end

@@ -13,22 +13,6 @@ class User < ApplicationRecord
   end
 
   class << self
-    def find_or_create_omniauth!(auth)
-      registered_identity = Identity.find_by_oauth_provider(auth)
-      return registered_identity.user if registered_identity.present?
-      register_by_auth_provider!(auth)
-    end
-
-    def register_by_auth_provider!(auth)
-      ApplicationRecord.transaction do
-        identity = Identity.first_or_create_with_omniauth!(auth)
-        user = User.create!(
-          email: auth.info.email,
-          identities: [identity]
-        )
-      end
-    end
-
     def reconfirmable
       false
     end
@@ -36,5 +20,13 @@ class User < ApplicationRecord
 
   def email_required?
     email.present?
+  end
+
+  def register_by_auth_provider!(auth)
+    registered_identity = Identity.find_by_oauth_provider(auth)
+    return registered_identity.user if registered_identity.present?
+    ApplicationRecord.transaction do
+      Identity.register!(self, auth)
+    end
   end
 end
