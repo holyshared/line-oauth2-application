@@ -7,6 +7,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # end
 
   def line
+    Rails.logger.info 'Receive oauth callback'
     @user = User.find_or_create_omniauth!(request.env['omniauth.auth'])
     sign_in_and_redirect @user, event: :authentication
     set_flash_message(:notice, :success, kind: 'Line') if is_navigational_format?
